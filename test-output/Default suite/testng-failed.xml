@@ -3,12 +3,11 @@
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
   <test name="Default test(failed)">
     <classes>
-      <class name="org.login.XpathFb">
+      <class name="com.EX.Parameter">
         <methods>
-          <include name="forgotPassword"/>
-          <include name="LoginFacebook"/>
+          <include name="login"/>
         </methods>
-      </class> <!-- org.login.XpathFb -->
+      </class> <!-- com.EX.Parameter -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

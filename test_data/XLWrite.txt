@@ -7,10 +7,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.Duration;
-import java.util.ArrayList;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.poi.hpsf.Array;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
@@ -43,29 +41,23 @@ public class LoginPageObjects extends BaseClass {
 		java.util.List<WebElement> mobileNames = driver
 				.findElements(By.xpath("//div[contains(text(),'APPLE iPhone')]"));
 
+		File f = new File("C:\\Users\\Sathik\\eclipse-workspace\\login\\test_data\\workbook1.xlsx");
+		Workbook book = new XSSFWorkbook();
+		Sheet sheet = book.createSheet("iPhones");
+
 		for (int i = 0; i < mobileNames.size(); i++) {
 			String name = mobileNames.get(i).getText();
-
 			System.out.println(name);
-			File f = new File("C:\\Users\\Sathik\\eclipse-workspace\\login\\test_data\\workbook1.xlsx");
-
-			FileInputStream fi = new FileInputStream(f);
-
-			Workbook book = new XSSFWorkbook(fi);
-			Sheet sheet = book.getSheet("iPhones");
-			Row row = sheet.getRow(i);
-			Cell cell = row.getCell(0);
-			DataFormatter df = new DataFormatter();
-			String stringCellValue = df.formatCellValue(cell);
-
-			System.out.println(stringCellValue);
-
-			if (!name.equals(stringCellValue)) {
-
-				System.out.println(name + " The Mobile is not Matched With " + stringCellValue);
- 
-			} 
+			Row row = sheet.createRow(i);
+			Cell cell = row.createCell(0);
+			cell.setCellValue(name);
+			FileOutputStream fo = new FileOutputStream(f);
+			book.write(fo);
 		}
+
+		FileOutputStream fo = new FileOutputStream(f);
+
+		book.write(fo);
 
 	}
 }

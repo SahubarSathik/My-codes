@@ -35,6 +35,7 @@ import com.google.common.collect.Tables;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class BaseClass {
+
 	public static WebDriver driver;
 	public static WebElement findElement;
 	public static Actions act;
@@ -42,8 +43,10 @@ public class BaseClass {
 	public static Select toSelect;
 
 	public static WebDriver getDriver(String browser) {
-	
-	
+
+		WebDriverManager.chromedriver().setup();
+		WebDriver driver = new ChromeDriver();
+
 		switch (browser) {
 		case "chrome":
 			driver = new ChromeDriver();
@@ -62,15 +65,17 @@ public class BaseClass {
 		return driver;
 
 	}
-	
 
 	public static void launch(String url) {
 		driver.get(url);
 		driver.manage().window().maximize();
 	}
-public static void locators1() {
-	
-}
+
+	public static void wait1() {
+
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+	}
+
 	public static WebElement locators(String locator, String value) {
 		if (locator.equals("id")) {
 			findElement = driver.findElement(By.id(value));
@@ -198,7 +203,7 @@ public static void locators1() {
 	// Sendkeys Using JavaScript
 	public static void textSendJavaSc(String value, WebElement element) {
 		JavascriptExecutor jk = (JavascriptExecutor) driver;
-		jk.executeScript("arguments[0].setAttribute('value'," + value + "')", element);
+		jk.executeScript("arguments[0].setAttribute('value','" + value + "')", element);
 	}
 
 	// getAttribute Using JavaScript
@@ -345,7 +350,7 @@ public static void locators1() {
 	public static String getKeyFromProperyFile(String key) throws IOException {
 		String string = getDataFromProperty().get(key).toString();
 		return string;
-		
+
 	}
 
 }

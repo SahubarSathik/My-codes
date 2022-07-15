@@ -5,6 +5,7 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -20,61 +21,27 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.Test;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class FlipKartProduct {
 
-	@Test
-	private void ascendingRupees() {
+	public static void main(String[] args) throws InterruptedException {
 
 		WebDriver driver = new ChromeDriver();
-		driver.get("https://www.flipkart.com/");
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
-
-		driver.findElement(By.xpath("//button[.='✕']")).click();
-
-		driver.findElement(By.tagName("input")).sendKeys("iphone 13", Keys.ENTER);
+		driver.manage().window().maximize();
+		driver.navigate().to("htts://facebook.com");
+		WebElement textUser = driver.findElement(By.id("username"));
+		textUser.sendKeys("santhose@gmail.com");
+		WebElement textpass = driver.findElement(By.name("password"));
+		textpass.sendKeys("123456");
+		WebElement button = driver.findElement(By.xpath("button"));
+		button.click();
+		Thread.sleep(3000);
+		driver.close();
 		
-		ArrayList<String> mobileNames = new ArrayList<String>();
-
-		List<WebElement> findElements = driver.findElements(By.xpath("//div[@class='_4rR01T']"));
-		for (WebElement mobileName : findElements) {
-
-			String name = mobileName.getText();
-			mobileNames.add(name);
-
-		}
-
-		List<WebElement> findElements2 = driver.findElements(By.xpath("//div[@class='_30jeq3 _1_WHN1']"));
-		ArrayList<Integer> prices = new ArrayList<Integer>();
-
-		for (WebElement mobilePrice : findElements2) {
-			String price = mobilePrice.getText().replace("₹", "").replace(",", "");
-			prices.add(Integer.parseInt(price));
-
-		}
-
-		Map<String, Integer> map = new HashMap<String, Integer>();
-		for (int i = 0; i < mobileNames.size(); i++) {
-			map.put(mobileNames.get(i), prices.get(i));
-		}
-
-		// map.forEach((k,v)->System.out.println(k+"\t"+v));
-		// map.forEach((k,v)->System.out.println(k+"\t"+v));
-		List<Entry<String, Integer>> list = new LinkedList<Map.Entry<String, Integer>>(map.entrySet());
-
-		Collections.sort(list, (o1, o2) -> {
-			return o1.getValue().compareTo(o2.getValue());
-		});
-
-		list.forEach(s -> System.err.println(s.getKey() + "\t" + s.getValue()));
-		//Iterator<Entry<String, Integer>> iterator = list.iterator();
-//		while (iterator.hasNext()) {
-//			Entry<String, Integer> next = iterator.next();
-//			System.out.println(next.getKey() + "\t" + next.getValue());
-//
-//		}
-		driver.quit();
 	}
-
 }
